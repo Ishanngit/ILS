@@ -34,7 +34,6 @@ namespace ILS.Utilities
                 return wait.Until(ExpectedConditions.ElementIsVisible(locator));
             }
 
-            // Method to find an element by locator (By) with a default timeout of 10 seconds
             public static IWebElement FindElement(IWebDriver driver, By locator)
             {
                 TimeSpan defaultTimeout = TimeSpan.FromSeconds(10);
@@ -54,21 +53,41 @@ namespace ILS.Utilities
                 });
 
             }
+
             public static void ClickElement(IWebDriver driver, By locator)
             {
-                IWebElement element = FindElement(driver, locator); // Use the FindElement method to locate the element
-
-                if (element != null)
+                if (driver == null)
                 {
-                    element.Click(); // Click the element
+                    throw new ArgumentNullException("driver", "Driver instance cannot be null");
                 }
-                else
+
+                try
                 {
-                    throw new NoSuchElementException($"Element with locator '{locator}' was not found.");
+                    WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                    IWebElement element = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+
+                    ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", element);
+                    element.Click();
+                }
+                catch (ElementClickInterceptedException)
+                {
+                    IWebElement element = driver.FindElement(locator);
+                    IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+                    jsExecutor.ExecuteScript("arguments[0].click();", element);
+                }
+                catch (NoSuchElementException)
+                {
+                    throw new Exception($"Element with locator {locator} was not found.");
                 }
             }
+
+
+
+
         }
-            public void StopBrowser()
+
+
+        public void StopBrowser()
         {
             driver.Quit();
             driver.Dispose();
