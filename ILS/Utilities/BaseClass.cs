@@ -6,6 +6,7 @@ using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
 
 
+
 namespace ILS.Utilities
 {
     public class BaseClass
@@ -24,6 +25,7 @@ namespace ILS.Utilities
                 Console.WriteLine($"Error starting the browser: {ex.Message}");
                 throw; // Re-throw the exception if necessary
             }
+            driver.Manage().Window.Maximize();
         }
         public static class WaitHelper
         {
@@ -80,12 +82,25 @@ namespace ILS.Utilities
                     throw new Exception($"Element with locator {locator} was not found.");
                 }
             }
+            public static void SelectFromDropdown(IWebDriver driver, By dropdownLocator, string valueToSelect)
+            {
+                var dropdownElement = FindElement(driver, dropdownLocator);
+                if (dropdownElement != null)
+                {
+                    var selectElement = new SelectElement(dropdownElement);
+                    selectElement.SelectByText(valueToSelect);
+                }
+                else
+                {
+                    throw new Exception($"Dropdown element with locator {dropdownLocator} not found.");
+                }
+            }
 
+           
 
 
 
         }
-
 
         public void StopBrowser()
         {
