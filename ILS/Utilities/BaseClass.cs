@@ -1,18 +1,35 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.Modules.BrowsingContext;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using NUnit.Framework;
-
-
+using Microsoft.Extensions.DependencyInjection;
+using ILS.Services;
+using System;
 
 namespace ILS.Utilities
 {
     public class BaseClass
     {
+        protected readonly ClientService clientService;
         public IWebDriver driver { get; private set; }
 
+        public BaseClass()
+        {
+            // Create the ServiceCollection
+            var serviceCollection = new ServiceCollection();
+
+            // Register HttpClient with ClientService
+            serviceCollection.AddHttpClient<ClientService>();
+
+            // Build the ServiceProvider
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Resolve ClientService from the service provider
+            clientService = serviceProvider.GetRequiredService<ClientService>();
+
+            
+        }
         public void StartBrowser()
         {
             try
