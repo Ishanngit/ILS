@@ -6,5 +6,6 @@
     #And I click on the login button
     And I enter OTP
     And I click on Verify Button
-    And the system fetches the user's additional data from the API in the background
-    # Then the client should be created successfully
+    And the system create Client data through API
+     And the system create Matter data through API
+   

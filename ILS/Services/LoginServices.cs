@@ -34,5 +34,26 @@ namespace ILS.Services
 
             return await httpClient.PostAsync("https://dev-api.ils-provision.co.uk/api/v1/lawyer/client/create", jsonContent);
         }
+        public async Task<HttpResponseMessage> CreateMatterAsync(string authToken, int clientId, string matterName, string matterId, string currency, string[] jurisdiction, string matterType)
+        {
+            // Set authorization header
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
+
+            var jsonContent = new StringContent(
+                JsonConvert.SerializeObject(new
+                {
+                    matter_name = matterName,
+                    matter_id = matterId,
+                    client = clientId, // Pass the client ID here
+                    currency = currency,
+                    jurisdiction = jurisdiction,
+                    matter_type = matterType
+                }),
+                Encoding.UTF8,
+                "application/json");
+
+            return await httpClient.PostAsync("https://dev-api.ils-provision.co.uk/api/v1/lawyer/matter/create", jsonContent);
+        }
+
     }
 }

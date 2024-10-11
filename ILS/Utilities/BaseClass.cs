@@ -144,5 +144,10 @@ namespace ILS.Utilities
                 }
             }
         }
+        public void StopBrowser()
+        {
+            driver.Quit();
+            driver.Dispose();
+        }
     }
 }

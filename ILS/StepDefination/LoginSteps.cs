@@ -191,12 +191,16 @@ namespace ILS.StepDefination
         public void ThenIClickOnCreateMatterButton()
         {
             WaitHelper.ClickElement(driver, By.XPath("//button[@class=\"ant-btn css-zpynnb ant-btn-primary sc-dLMFU bmwhUr\"]"));
+
+            By toastMessageLocator = By.XPath("//div[@class='ant-message-notice-content']"); // Update with actual locator
+            IWebElement toastElement = WaitHelper.WaitForElementToBeVisible(driver, toastMessageLocator, TimeSpan.FromSeconds(10));
+
         }
 
-        /* [AfterScenario]
+        [AfterScenario]
          public void CleanUp()
          {
              StopBrowser(); 
-         }*/
+         }
     }
 }
