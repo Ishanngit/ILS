@@ -10,9 +10,9 @@ namespace ILS.StepDefination
     [Binding]
     public class LoginSteps : BaseClass
     {
-        private readonly WithAPIPRocessStepDefinitions apiProcessSteps; // Reference to API process steps
+        private readonly WithAPIPRocessStepDefinitions apiProcessSteps;
 
-        public LoginSteps(WithAPIPRocessStepDefinitions apiProcessSteps) // Constructor injection
+        public LoginSteps(WithAPIPRocessStepDefinitions apiProcessSteps) : base()
         {
             this.apiProcessSteps = apiProcessSteps;
         }
@@ -41,10 +41,6 @@ namespace ILS.StepDefination
 
             // Click on the login button
             WaitHelper.ClickElement(driver, By.XPath("//button[@type='submit']"));
-
-            // Get the token from session after login
-            var token = GetTokenFromSession(); // Retrieve the token from session
-            apiProcessSteps.SetAuthToken(token); // Set the AuthToken in WithAPIPRocessStepDefinitions
         }
 
         [When(@"I enter OTP")]
@@ -61,24 +57,35 @@ namespace ILS.StepDefination
                 otpInputs[i].Click();
                 otpInputs[i].SendKeys(receivedOtp[i].ToString());
             }
-
-            // Optionally update the token again if necessary
-            var token = GetTokenFromSession(); // Implement this method
-            apiProcessSteps.SetAuthToken(token); // Update the AuthToken
-        }
-
-        public string GetTokenFromSession()
-        {
-            // Logic to retrieve token from session or cookies.
-            var cookie = driver.Manage().Cookies.GetCookieNamed("auth_token"); // Adjust the cookie name as per your implementation
-            return cookie?.Value; // Returns the token if cookie exists
         }
 
         [When(@"I click on Verify Button")]
         public void WhenIClickOnVerifyButton()
         {
+          
             WaitHelper.ClickElement(driver, By.XPath("//button[@type='submit']"));
+
+          
+            Thread.Sleep(3000); 
+
+            // Retrieve and log cookies to check for access token
+            var cookies = (string)((IJavaScriptExecutor)driver).ExecuteScript("return document.cookie;");
+            Console.WriteLine("Cookies after login attempt: " + cookies); // Log all cookies for inspection
+
+            // Retrieve the access token
+            var token = GetTokenFromBrowser();
+            if (token != null)
+            {
+                SetAuthToken(token); 
+                apiProcessSteps.SetAuthToken(token); 
+            }
+            else
+            {
+                Assert.Fail("Access token could not be retrieved.");
+            }
         }
+
+
 
         [When(@"I clicks on the Clients menu in the side panel")]
         public void WhenIClicksOnTheClientsMenuInTheSidePanel()
@@ -91,6 +98,7 @@ namespace ILS.StepDefination
         {
             WaitHelper.ClickElement(driver, By.XPath("//button[@class='ant-btn css-zpynnb ant-btn-primary sc-dLMFU bmwhUr ant-btn-icon-me-0']//span[@class='ant-btn-icon']//*[name()='svg']"));
         }
+
         [When(@"I add client name ""([^""]*)""")]
         public void WhenIAddClientName(string clientName)
         {
@@ -105,18 +113,13 @@ namespace ILS.StepDefination
             emailInput.SendKeys(clientId);
         }
 
-
         [When(@"I select access  ""([^""]*)""")]
         public void WhenISelectAccess(string firmType)
         {
-
             WaitHelper.ClickElement(driver, By.XPath("//input[@id='client_type']"));
-
-
             WaitHelper.ClickElement(driver, By.XPath("//div[@title='Firm wide']"));
-
-
         }
+
         [When(@"I enter Principal contact email address")]
         public void WhenIEnterPrincipalContactEmailAddress()
         {
@@ -130,8 +133,6 @@ namespace ILS.StepDefination
             WaitHelper.ClickElement(driver, By.XPath("//button[@type='submit']"));
         }
 
-
-
         [When(@"I clicks on the Matters menu in the side panel")]
         public void WhenIClicksOnTheMattersMenuInTheSidePanel()
         {
@@ -142,7 +143,6 @@ namespace ILS.StepDefination
         public void WhenIClickOnAddNewMatterButton()
         {
             WaitHelper.ClickElement(driver, By.XPath("//button[@class=\"ant-btn css-zpynnb ant-btn-primary sc-dLMFU bmwhUr ant-btn-icon-me-0\"]"));
-
         }
 
         [When(@"I add Matter name ""([^""]*)""")]
@@ -163,18 +163,13 @@ namespace ILS.StepDefination
         public void ThenISelectClientName(string ClientName)
         {
             WaitHelper.ClickElement(driver, By.XPath("//input[@id='clientName']"));
-
-
             WaitHelper.ClickElement(driver, By.XPath("//div[@title='Automation Data']"));
         }
 
         [Then(@"I select Currency ""([^""]*)""")]
         public void ThenISelectCurrency(string currency)
         {
-
             WaitHelper.ClickElement(driver, By.XPath("//input[@id='currency']"));
-
-
             WaitHelper.ClickElement(driver, By.XPath("//div[@title=\"USD $\"]"));
         }
 
@@ -189,8 +184,6 @@ namespace ILS.StepDefination
         public void ThenSelectMatterType(string firm)
         {
             WaitHelper.ClickElement(driver, By.XPath("//input[@id='matterType']"));
-
-
             WaitHelper.ClickElement(driver, By.XPath("//div[@title=\"Firm wide\"]"));
         }
 
@@ -198,14 +191,7 @@ namespace ILS.StepDefination
         public void ThenIClickOnCreateMatterButton()
         {
             WaitHelper.ClickElement(driver, By.XPath("//button[@class=\"ant-btn css-zpynnb ant-btn-primary sc-dLMFU bmwhUr\"]"));
-
         }
-        public string GetTokenFromCookies()
-        {
-            var tokenCookie = driver.Manage().Cookies.GetCookieNamed("auth_token");
-            return tokenCookie?.Value;
-        }
-
 
         /* [AfterScenario]
          public void CleanUp()
