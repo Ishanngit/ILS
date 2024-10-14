@@ -20,14 +20,20 @@ namespace ILS.StepDefination
         [BeforeScenario]
         public void SetUp()
         {
-            StartBrowser();
-            driver.Manage().Window.Maximize();
+            if (driver == null || driver.Url == "about:blank")
+            {
+                StartBrowser();
+                driver.Manage().Window.Maximize();
+                driver.Navigate().GoToUrl("https://dev.ils-provision.co.uk/login");
+            }
         }
 
         [Given(@"I am on the login page")]
         public void GivenIAmOnTheLoginPage()
         {
             driver.Navigate().GoToUrl("https://dev.ils-provision.co.uk/login");
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("email")));
         }
 
         [When(@"I enter valid email and password")]
@@ -48,7 +54,6 @@ namespace ILS.StepDefination
         {
             string receivedOtp = "111111";
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-
             var otpInputs = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector(".input-otp__field")));
 
             for (int i = 0; i < receivedOtp.Length; i++)
@@ -62,30 +67,20 @@ namespace ILS.StepDefination
         [When(@"I click on Verify Button")]
         public void WhenIClickOnVerifyButton()
         {
-          
             WaitHelper.ClickElement(driver, By.XPath("//button[@type='submit']"));
+            Thread.Sleep(3000);
 
-          
-            Thread.Sleep(3000); 
-
-            // Retrieve and log cookies to check for access token
-            var cookies = (string)((IJavaScriptExecutor)driver).ExecuteScript("return document.cookie;");
-            Console.WriteLine("Cookies after login attempt: " + cookies); // Log all cookies for inspection
-
-            // Retrieve the access token
             var token = GetTokenFromBrowser();
             if (token != null)
             {
-                SetAuthToken(token); 
-                apiProcessSteps.SetAuthToken(token); 
+                SetAuthToken(token);
+                apiProcessSteps.SetAuthToken(token);
             }
             else
             {
                 Assert.Fail("Access token could not be retrieved.");
             }
         }
-
-
 
         [When(@"I clicks on the Clients menu in the side panel")]
         public void WhenIClicksOnTheClientsMenuInTheSidePanel()
@@ -123,8 +118,11 @@ namespace ILS.StepDefination
         [When(@"I enter Principal contact email address")]
         public void WhenIEnterPrincipalContactEmailAddress()
         {
+            // Generate a unique email
+            string uniqueEmail = $"automation_{DateTime.Now:yyyyMMddHHmmssfff}@simformtest.com";
             var emailInput = WaitHelper.FindElement(driver, By.Id("email"));
-            emailInput.SendKeys("client@simformtest.com");
+            emailInput.SendKeys(uniqueEmail);
+            Console.WriteLine($"Unique email entered: {uniqueEmail}");
         }
 
         [Then(@"I click on Add client button")]
@@ -163,7 +161,7 @@ namespace ILS.StepDefination
         public void ThenISelectClientName(string ClientName)
         {
             WaitHelper.ClickElement(driver, By.XPath("//input[@id='clientName']"));
-            WaitHelper.ClickElement(driver, By.XPath("//div[@title='Automation Data']"));
+            WaitHelper.ClickElement(driver, By.XPath($"//div[@title='{ClientName}']"));  // Dynamic XPath based on ClientName
         }
 
         [Then(@"I select Currency ""([^""]*)""")]
@@ -194,13 +192,42 @@ namespace ILS.StepDefination
 
             By toastMessageLocator = By.XPath("//div[@class='ant-message-notice-content']"); // Update with actual locator
             IWebElement toastElement = WaitHelper.WaitForElementToBeVisible(driver, toastMessageLocator, TimeSpan.FromSeconds(10));
+        }
 
+        [Then(@"I click on delete button")]
+        public void ThenIClickOnDeleteButton()
+        {
+            WaitHelper.ClickElement(driver, By.XPath("//a[@class='sc-ddjGPC icstSb'][2]"));
+        }
+
+        [Then(@"I click on delete")]
+        public void ThenIClickOnDelete()
+        {
+            WaitHelper.ClickElement(driver, By.XPath("//button[@class=\"ant-btn css-zpynnb ant-btn-primary ant-btn-block ant-btn-dangerous sc-dLMFU bmwhUr\"]"));
+        }
+
+        [When(@"I click on delete client button")]
+        public void WhenIClickOnDeleteClientButton()
+        {
+            WaitHelper.ClickElement(driver, By.XPath("//tbody//button[2]//*[name()='svg']"));
+        }
+
+        [When(@"I click on delete button on confirmation model")]
+        public void WhenIClickOnDeleteButtonOnConfirmationModel()
+        {
+            WaitHelper.ClickElement(driver, By.XPath("//button[@class=\"ant-btn css-zpynnb ant-btn-primary ant-btn-block ant-btn-dangerous sc-dLMFU bmwhUr\"]"));
+
+            By toastMessageLocator = By.XPath("//div[@class='ant-message-notice-content']");
+            IWebElement toastElement = WaitHelper.WaitForElementToBeVisible(driver, toastMessageLocator, TimeSpan.FromSeconds(10));
         }
 
         [AfterScenario]
-         public void CleanUp()
-         {
-             StopBrowser(); 
-         }
+        public void CleanUp()
+        {
+            if (driver != null)
+            {
+                driver.Close(); // Keeping the browser open between scenarios, but closing after all scenarios
+            }
+        }
     }
 }
