@@ -55,5 +55,9 @@ namespace ILS.Services
             return await httpClient.PostAsync("https://dev-api.ils-provision.co.uk/api/v1/lawyer/matter/create", jsonContent);
         }
 
+        internal Task DeleteMatterAsync(string token, int matterId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ILS.Services;
 using System;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace ILS.Utilities
 {
@@ -87,7 +88,7 @@ namespace ILS.Utilities
 
             public static IWebElement FindElement(IWebDriver driver, By locator)
             {
-                TimeSpan defaultTimeout = TimeSpan.FromSeconds(10);
+                TimeSpan defaultTimeout = TimeSpan.FromSeconds(20);
                 WebDriverWait wait = new WebDriverWait(driver, defaultTimeout);
 
                 return wait.Until(d =>
@@ -144,6 +145,9 @@ namespace ILS.Utilities
                 }
             }
         }
+   
+       
+
         public void StopBrowser()
         {
             driver.Quit();

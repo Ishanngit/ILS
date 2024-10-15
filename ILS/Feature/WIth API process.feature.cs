@@ -75,10 +75,19 @@ namespace ILS.Feature
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("With API Process")]
-        public void WithAPIProcess()
+        [NUnit.Framework.TestCaseAttribute("1", "test1@example.com", "Client Test 1", "Matter Test 1", null)]
+        [NUnit.Framework.TestCaseAttribute("2", "test2@example.com", "Client Test 2", "Matter Test 2", null)]
+        [NUnit.Framework.TestCaseAttribute("3", "test3@example.com", "Client Test 3", "Matter Test 3", null)]
+        [NUnit.Framework.TestCaseAttribute("4", "test4@example.com", "Client Test 4", "Matter Test 4", null)]
+        [NUnit.Framework.TestCaseAttribute("5", "test5@example.com", "Client Test 5", "Matter Test 5", null)]
+        public void WithAPIProcess(string iteration, string email, string clientName, string matterName, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("iteration", iteration);
+            argumentsOfScenario.Add("email", email);
+            argumentsOfScenario.Add("clientName", clientName);
+            argumentsOfScenario.Add("matterName", matterName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("With API Process", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
   this.ScenarioInitialize(scenarioInfo);
@@ -96,17 +105,23 @@ namespace ILS.Feature
 #line 5
     testRunner.When("I enter valid email and password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 7
+#line 6
     testRunner.And("I enter OTP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 8
+#line 7
     testRunner.And("I click on Verify Button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 9
+#line 8
     testRunner.And("the system create Client data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 9
+    testRunner.And("the system create Matter data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
 #line 10
-     testRunner.And("the system create Matter data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("the system delete matter data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 11
+    testRunner.And("the system delete client data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

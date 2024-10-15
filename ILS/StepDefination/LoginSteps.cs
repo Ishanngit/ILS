@@ -190,8 +190,12 @@ namespace ILS.StepDefination
         {
             WaitHelper.ClickElement(driver, By.XPath("//button[@class=\"ant-btn css-zpynnb ant-btn-primary sc-dLMFU bmwhUr\"]"));
 
-            By toastMessageLocator = By.XPath("//div[@class='ant-message-notice-content']"); // Update with actual locator
+            By toastMessageLocator = By.XPath("//div[@class='ant-message-notice-content']");
             IWebElement toastElement = WaitHelper.WaitForElementToBeVisible(driver, toastMessageLocator, TimeSpan.FromSeconds(10));
+
+
+            Thread.Sleep(3000);
+
         }
 
         [Then(@"I click on delete button")]
@@ -226,7 +230,7 @@ namespace ILS.StepDefination
         {
             if (driver != null)
             {
-                driver.Close(); // Keeping the browser open between scenarios, but closing after all scenarios
+                driver.Close(); 
             }
         }
     }
