@@ -20,22 +20,22 @@ namespace ILS.Feature
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("With API Process")]
-    public partial class WithAPIProcessFeature
+    [NUnit.Framework.DescriptionAttribute("CommonTest")]
+    public partial class CommonTestFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
         private static string[] featureTags = ((string[])(null));
         
-#line 1 "WIth API process.feature"
+#line 1 "CommonTest.feature"
 #line hidden
         
         [NUnit.Framework.OneTimeSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Feature", "With API Process", null, ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Feature", "CommonTest", null, ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -74,28 +74,26 @@ namespace ILS.Feature
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("With API Process")]
-        [NUnit.Framework.TestCaseAttribute("1", "test1@example.com", "Client Test 1", "Matter Test 1", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "test2@example.com", "Client Test 2", "Matter Test 2", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "test3@example.com", "Client Test 3", "Matter Test 3", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "test4@example.com", "Client Test 4", "Matter Test 4", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "test5@example.com", "Client Test 5", "Matter Test 5", null)]
-        [NUnit.Framework.TestCaseAttribute("1", "test6@example.com", "Client Test 6", "Matter Test 6", null)]
-        [NUnit.Framework.TestCaseAttribute("2", "test7@example.com", "Client Test 7", "Matter Test 7", null)]
-        [NUnit.Framework.TestCaseAttribute("3", "test8@example.com", "Client Test 8", "Matter Test 8", null)]
-        [NUnit.Framework.TestCaseAttribute("4", "test9@example.com", "Client Test 9", "Matter Test 9", null)]
-        [NUnit.Framework.TestCaseAttribute("5", "test10@example.com", "Client Test 10", "Matter Test 10", null)]
-        public void WithAPIProcess(string iteration, string email, string clientName, string matterName, string[] exampleTags)
+        [NUnit.Framework.DescriptionAttribute("Common Test for UI and API")]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 1", "1122331", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 2", "1122332", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 3", "1122333", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 4", "1122334", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 5", "1122335", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 6", "1122336", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 7", "1122337", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 8", "1122338", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 9", "1122339", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Matter 10", "11223310", null)]
+        public void CommonTestForUIAndAPI(string matterName, string matterId, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("iteration", iteration);
-            argumentsOfScenario.Add("email", email);
-            argumentsOfScenario.Add("clientName", clientName);
             argumentsOfScenario.Add("matterName", matterName);
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("With API Process", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            argumentsOfScenario.Add("matterId", matterId);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Common Test for UI and API", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 3
-  this.ScenarioInitialize(scenarioInfo);
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -105,7 +103,7 @@ namespace ILS.Feature
             {
                 this.ScenarioStart();
 #line 4
-    testRunner.Given("I am on the login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+  testRunner.Given("I am on the login page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 5
     testRunner.When("I enter valid email and password", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
@@ -120,13 +118,43 @@ namespace ILS.Feature
     testRunner.And("the system create Client data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
-    testRunner.And("the system create Matter data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+     testRunner.When("I clicks on the Matters menu in the side panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 10
-    testRunner.Then("the system delete matter data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+    testRunner.And("I click on Add New Matter button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 11
-    testRunner.And("the system delete client data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And(string.Format("I add Matter name \"{0}\"", matterName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 12
+    testRunner.And(string.Format("I enter Matter id \"{0}\"", matterId), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 13
+    testRunner.Then("I select client name \"Automation Data 1\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 14
+    testRunner.And("I select Currency \"USD\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 15
+    testRunner.And("I add Jurisdiction Test", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 16
+    testRunner.And("Select Matter Type \"Firm\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 17
+    testRunner.Then("I click on Create Matter button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 18
+    testRunner.When("I clicks on the Matters menu in the side panel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 19
+    testRunner.Then("I click on delete button", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 20
+    testRunner.And("I click on delete", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 21
+   testRunner.And("the system delete client data through API", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

@@ -33,9 +33,14 @@
 
 
   Examples:
-    | clientName        | clientId | matterName         | matterId |
-    | Automation Data 1 | 123451   | Automation Matter 1 | 1122331  |
-    | Automation Data 2 | 123452   | Automation Matter 2 | 1122332  |
-    | Automation Data 3 | 123453   | Automation Matter 3 | 1122333  |
-    | Automation Data 4 | 123454   | Automation Matter 4 | 1122334  |
-    | Automation Data 5 | 123455   | Automation Matter 5 | 1122335  |
+    | clientName         | clientId | matterName           | matterId |
+    | Automation Data 1  | 123451   | Automation Matter 1  | 1122331  |
+    | Automation Data 2  | 123452   | Automation Matter 2  | 1122332  |
+    | Automation Data 3  | 123453   | Automation Matter 3  | 1122333  |
+    | Automation Data 4  | 123454   | Automation Matter 4  | 1122334  |
+    | Automation Data 5  | 123455   | Automation Matter 5  | 1122335  |
+    | Automation Data 6  | 123456   | Automation Matter 6  | 1122336  |
+    | Automation Data 7  | 123457   | Automation Matter 7  | 1122337  |
+    | Automation Data 8  | 123458   | Automation Matter 8  | 1122338  |
+    | Automation Data 9  | 123459   | Automation Matter 9  | 1122339  |
+    | Automation Data 10 | 1234510  | Automation Matter 10 | 11223310 |

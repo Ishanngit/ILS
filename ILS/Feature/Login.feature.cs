@@ -98,6 +98,11 @@ namespace ILS.Feature
         [NUnit.Framework.TestCaseAttribute("Automation Data 3", "123453", "Automation Matter 3", "1122333", null)]
         [NUnit.Framework.TestCaseAttribute("Automation Data 4", "123454", "Automation Matter 4", "1122334", null)]
         [NUnit.Framework.TestCaseAttribute("Automation Data 5", "123455", "Automation Matter 5", "1122335", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Data 6", "123456", "Automation Matter 6", "1122336", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Data 7", "123457", "Automation Matter 7", "1122337", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Data 8", "123458", "Automation Matter 8", "1122338", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Data 9", "123459", "Automation Matter 9", "1122339", null)]
+        [NUnit.Framework.TestCaseAttribute("Automation Data 10", "1234510", "Automation Matter 10", "11223310", null)]
         public void CreateClientAndMatterThenDelete(string clientName, string clientId, string matterName, string matterId, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

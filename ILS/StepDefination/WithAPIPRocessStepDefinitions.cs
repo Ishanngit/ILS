@@ -26,10 +26,10 @@ namespace ILS.StepDefination
             {
                 Assert.Fail("Authorization token is not set.");
             }
-
+           
             try
             {
-                var response = await clientService.CreateClientAsync(token, "12345", "Test Client", "test@example.com", "1234567890");
+                var response = await clientService.CreateClientAsync(token, "123451", "Automation Data 1", "test@example.com", "1234567890");
 
                 // Check if the response is successful
                 if (response.IsSuccessStatusCode)
